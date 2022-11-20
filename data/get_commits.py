@@ -7,16 +7,15 @@ import requests
 commits = pd.read_csv("../data/datasets/data.csv")
 commits['commit_count'] = 0
 
-for i in range(0,1):
+for i in range(0,2500):
     full_name = commits['full_name'].iloc[i]
-    print(full_name)
+
     # First get the latest commit request: https://docs.github.com/en/rest/commits/commits
-    last_commit_req = "https://api.github.com/repos/freeCodeCamp/freeCodeCamp/commits?per_page=1&order=desc"
+    last_commit_req = "https://api.github.com/repos/{full_name}/commits?per_page=1&order=desc"
     result = requests.get(last_commit_req)
 
     # Second, determine the last page. Because there is a single commit per page, the last page would be 
     # the commit total. The reges is similar to the source.
-    print(result.headers.get('Link'))
     if result.headers.get('Link'):
         commit_count = int(result.headers.get('Link').split(',')[1].split('=')[3].split('>')[0])
         commits['commit_count'].iloc[i] = commit_count
