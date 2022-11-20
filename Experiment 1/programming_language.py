@@ -5,7 +5,6 @@ if __name__ == '__main__':
     df = pandas.read_csv('data.csv')
     df = df.drop(df.iloc[:, :6], axis=1)
     df = df.drop(df.iloc[:, 2:], axis=1)
-    print(df)
     top10 = df
     top10 = top10.dropna()
     top10 = top10.groupby(['Language'])['number_of_stars'].count()
@@ -18,7 +17,6 @@ if __name__ == '__main__':
 
     topMedian = df.groupby(['Language'])['number_of_stars'].median()
     topMedian = topMedian.sort_values(ascending=False)
-    print(topMedian)
 
     plot = pandas.DataFrame({col: vals['number_of_stars'] for col, vals in df.groupby(by=['Language'])})
     med = plot.median().sort_values(ascending=False)
