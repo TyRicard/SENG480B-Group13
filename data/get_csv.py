@@ -19,6 +19,7 @@ def generate_csv(self, filename):
         for repo in result['items']:
             temp = {'repository_ID': repo['id'],
                     'name': repo['name'],
+                    'full_name': repo['full_name'],
                     'URL': repo['html_url'],
                     'created_date': datetime.strptime(repo['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
                     'Language': repo['language'],

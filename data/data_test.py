@@ -17,7 +17,9 @@ while idx_count <= 2500:
     for repo in result['items']:
         temp = {'repository_ID': repo['id'],
                 'name': repo['name'],
+                'full_name': repo['full_name'],
                 'URL': repo['html_url'],
+                'branch': repo['default_branch'],
                 'created_date': datetime.strptime(repo['created_at'], '%Y-%m-%dT%H:%M:%SZ'),
                 'number_of_stars': repo['stargazers_count']}
 
