@@ -10,11 +10,11 @@ def main():
     # This produces a scatterplot
     scatter_plot =  sns.scatterplot(
                     data=stars_and_forks,
-                    x="forks_count",
+                    x="commit_count",
                     y="number_of_stars")
 
     # Changing the Label Titles to Match Approach
-    scatter_plot.set(xlabel="Forks",
+    scatter_plot.set(xlabel="Commits",
                     ylabel="Stars",
                     xscale="log",
                     yscale="log",
