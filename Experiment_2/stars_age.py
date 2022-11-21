@@ -21,7 +21,6 @@ def main():
 
     # For element-wise Calculation with Pandas: https://queirozf.com/entries/pandas-dataframe-examples-column-operations
     stars_and_age["age"] = stars_and_age['created_date'].map(lambda cd: subtract_times(cd))
-
     # This produces a scatterplot
     scatter_plot =  sns.scatterplot(
                     data=stars_and_age,
@@ -30,7 +29,9 @@ def main():
 
     # Changing the Label Titles to Match Approach
     scatter_plot.set(xlabel="Age (Weeks)",
-                    ylabel="Stars")
+                    ylabel="Stars",
+                    yscale="log",
+                    ylim=1000)
 
     plt.show()
 

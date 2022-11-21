@@ -4,7 +4,8 @@ from datetime import datetime
 import pandas
 import requests
 
-
+# This file needs to be executed first. 
+# Afterwards, run the `get_commits.py` file with your authentication
 def generate_csv(filename):
     df = pandas.DataFrame(columns=['repository_ID', 'name', 'URL', 'created_date',
                           'description', 'Language', 'number_of_stars', 'type', 'created_at', 'forks_count'])
