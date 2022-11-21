@@ -27,4 +27,4 @@ def get_commits(file_in, file_out):
 
 
 if __name__ == '__main__':
-    get_commits('nov20_data.csv', 'git_commits.csv')
+    get_commits('data.csv', 'git_commits.csv')
