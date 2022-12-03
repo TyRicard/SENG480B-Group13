@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 
 def main():
     # Basic Seaborn Approach: https://seaborn.pydata.org/tutorial/introduction
-    stars_and_forks = pd.read_csv("../data/datasets/data.csv")
+    stars_and_commits = pd.read_csv("../data/datasets/data.csv")
 
     # This produces a scatterplot
     scatter_plot =  sns.scatterplot(
-                    data=stars_and_forks,
+                    data=stars_and_commits,
                     x="commit_count",
                     y="number_of_stars")
 
