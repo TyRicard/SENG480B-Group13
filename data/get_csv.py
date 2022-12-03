@@ -20,7 +20,7 @@ def generate_csv(filename):
         result = requests.get(
             f'https://api.github.com/search/repositories?q=stars:{search_query}&sort=stars&order=desc&per_page=100&page={page_count}').json()
 
-        if('messsage' in result):
+        if('message' in result):
             print(result)
             break
 
