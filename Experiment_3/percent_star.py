@@ -7,11 +7,10 @@ import matplotlib.pyplot as plt
 def main():
     # https://www.geeksforgeeks.org/how-to-calculate-and-plot-a-cumulative-distribution-function-with-matplotlib-in-python/
     # Basic Seaborn Approach: https://seaborn.pydata.org/tutorial/introduction
-    ten_percent_stars = pd.read_csv("../data/datasets/RQ3_data.csv")
+    percent_stars = pd.read_csv("../data/datasets/RQ3_data.csv")
 
     # This produces an ECDF plot
-    ecdf_plot =  sns.ecdfplot(data=ten_percent_stars,
-                              x="ten_percent_star")
+    ecdf_plot =  sns.ecdfplot(data=percent_stars.filter(like="percent_", axis="columns"))
 
     # Changing the Label Titles to Match Approach
     ecdf_plot.set(xlabel="Fraction of Time Since Create",
