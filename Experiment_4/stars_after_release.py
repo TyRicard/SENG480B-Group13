@@ -1,10 +1,68 @@
-# Read in data from from datasets/data.csv
-# Loop through each repo, remove any repo with more than 40000 stars
+import pandas as pd
+import requests
+import re
+import os
 
-# For every remaining repo
-# Use the 'Release' endpoint: https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28
-# Find the 'tag_name' of the latest release and ensure that it follows a semantic version label
-# For example v1.0.0 -> x.y.z
+# load token from environment file
+# to use the script you need a .env file with your token and username exported as an environment variable
+from dotenv import load_dotenv
+load_dotenv()
+
+
+def main():
+    # Read in data from from datasets/data.csv
+    # Remove any repo with more than 40000 stars
+    repos = pd.read_csv("../data/datasets/data.csv")
+    repos = repos.drop(repos[repos.number_of_stars >= 40000].index)
+
+    # For every remaining repo
+    # Use the 'Release' endpoint: https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28
+    # Find the 'tag_name' of the latest release and ensure that it follows a semantic version label
+    # For example v1.0.0 -> x.y.z
+
+    # Add new bool column for versioning format
+    repos['semantic_versioning'] = ''
+
+    for idx, row in enumerate(repos.to_dict(orient='records')):
+        # print(row)
+        releases_request = f"https://api.github.com/repos/{row['full_name']}/releases?page=1&per_page=1"
+        print(releases_request)
+        result = requests.get(releases_request, auth=(os.environ.get('username'),
+                                                      os.environ.get('gh_token'))).json()
+        if('message' in result):
+            print(result)
+            break
+
+        if(len(result) == 0):
+            repos.at[idx, 'semantic_versioning'] = False
+
+        else:
+            release = result[0]
+            if ('tag_name' in release):
+                # Clean tag name
+                tag_name = str.casefold(release['tag_name'])
+                if(tag_name.startswith('v')):
+                    tag_name = tag_name[1:]
+
+                # Check if semantic version
+                sem_re = "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
+                if(re.search(sem_re, tag_name)):
+                    repos.at[idx, 'semantic_versioning'] = True
+                else:
+                    repos.at[idx, 'semantic_versioning'] = False
+
+    print(repos[['repository_ID', 'full_name', 'number_of_stars', 'semantic_versioning']])
+
+    # Remove all non-semantically versioned repos
+    # There seems to be a problem with semantic versions being assigned to dropped repos
+    # Is there a way to delete the dropped rows? Or maybe my regex query considers a null value a semantic version?
+    repos = repos.drop(repos[repos.semantic_versioning == False].index)
+    print(repos[['repository_ID', 'full_name', 'number_of_stars', 'semantic_versioning']])
+
+
+if __name__ == "__main__":
+    main()
+
 
 # Save those repositories to a new database or however you wish to store them
 # You should now have a list of repos with less than 40k stars and semantic versioning
