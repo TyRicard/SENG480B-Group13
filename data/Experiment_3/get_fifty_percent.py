@@ -29,7 +29,7 @@ def get_fifty_percent(file_in, file_out):
         # Second, get the date of the half-star count making an api call.
         count_req = f"https://api.github.com/repos/{full_name}/stargazers?page={fifty_star_count}&per_page=1"
         headers = {'Accept': 'application/vnd.github.v3.star+json'}
-        result = requests.get(count_req, auth=("TyRicard", "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"), headers=headers).json()
+        result = requests.get(count_req, auth=("<username>", "<password>"), headers=headers).json()
 
         # To do the calculation, get the time of the milestone star, the repo's creation_date, and current_time
         if result:
