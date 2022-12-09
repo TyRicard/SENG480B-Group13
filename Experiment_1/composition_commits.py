@@ -10,6 +10,7 @@ def main():
     repo_df = pd.read_csv("../data/datasets/data.csv")
 
     # This produces a boxplot without outliers
+        # To Remove Outliers: https://www.mikulskibartosz.name/how-to-remove-outliers-from-seaborn-boxplot-charts/
     boxplot = sns.boxplot (
                     data=repo_df,
                     y="commit_count",

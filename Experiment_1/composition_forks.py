@@ -10,6 +10,7 @@ def main():
     repos_df = pd.read_csv("../data/datasets/data.csv")
 
     # This produces a boxplot
+    # To Remove Outliers: https://www.mikulskibartosz.name/how-to-remove-outliers-from-seaborn-boxplot-charts/
     boxplot =  sns.boxplot(
                     data=repos_df,
                     y="forks_count",
