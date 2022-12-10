@@ -7,22 +7,19 @@ import requests
 # This file needs to be executed first.
 # Afterwards, run the `get_commits.py` file with your authentication
 
-
 def generate_csv(filename):
     df = pandas.DataFrame(columns=['repository_ID', 'name', 'URL', 'created_date',
                           'description', 'Language', 'number_of_stars', 'type', 'created_at', 'forks_count'])
 
-    idx_count = 1
+    idx_count = 0
     page_count = 1
     search_query = '>500'
 
-    while idx_count <= 2500:
-        result = requests.get(
-            f'https://api.github.com/search/repositories?q=stars:{search_query}&sort=stars&order=desc&per_page=100&page={page_count}').json()
+    while idx_count < 2500:
+        req_repo = f'https://api.github.com/search/repositories?q=stars:{search_query}&sort=stars&order=desc&per_page=100&page={page_count}'
 
-        if('message' in result):
-            print(result)
-            break
+        result = requests.get(req_repo,
+                              auth=("<username>", "<password>")).json()
 
         for repo in result['items']:
             temp = {'repository_ID': repo['id'],
@@ -38,15 +35,14 @@ def generate_csv(filename):
 
             temp_df = pandas.DataFrame(temp, index=[idx_count])
             df = pandas.concat([df, temp_df])
-            print(f"Indexed: {temp['name']}")
             print(f"Number of indexed results: {idx_count}")
+            print(f"Indexed: {temp['name']} and star count: {temp['number_of_stars']}")
             idx_count = idx_count + 1
 
             if (idx_count % 1000 == 0):
-                last_stars = repo['stargazers_count']
-                search_query = f"<{last_stars}"
-                print(f"1000 results reached, waiting and starting new query at {last_stars} stars...")
-                time.sleep(360)
+                last_stars = repo['stargazers_count'] - 1
+                search_query = f"500..{last_stars}"
+                print(f"1000 results reached, starting new query at {last_stars} stars...")
                 page_count = 0
 
         page_count = page_count + 1
