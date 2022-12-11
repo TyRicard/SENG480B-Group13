@@ -13,7 +13,7 @@ def get_contributors(file_in, file_out):
         full_name = contributors['full_name'].iloc[i]
 
         contributors_req = f"https://api.github.com/repos/{full_name}/contributors?anon=1&page=1&per_page=1"
-        result = requests.get(contributors_req, auth=("<username>", "<token>"))
+        result = requests.get(contributors_req, auth=("<username>", "<password>"))
 
         # Second, determine the last page. Because there is a single contributor per page, the last page would be
         # the commit total. The regex is similar to the source.

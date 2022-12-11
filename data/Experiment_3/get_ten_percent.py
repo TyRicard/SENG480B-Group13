@@ -45,4 +45,4 @@ def get_ten_percent(file_in, file_out):
 
 
 if __name__ == '__main__':
-    get_ten_percent('preprocess_data.csv', 'RQ3_data.csv')
+    get_ten_percent('data.csv', 'RQ3_data.csv')

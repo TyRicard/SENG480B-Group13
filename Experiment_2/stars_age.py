@@ -31,7 +31,7 @@ def main():
     scatter_plot.set(xlabel="Age (Weeks)",
                     ylabel="Stars",
                     yscale="log",
-                    ylim=1000)
+                    ylim=10000)
 
     plt.show()
 

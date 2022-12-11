@@ -9,7 +9,7 @@ import requests
 
 def generate_csv(filename):
     df = pandas.DataFrame(columns=['repository_ID', 'name', 'URL', 'created_date',
-                          'description', 'Language', 'number_of_stars', 'type', 'created_at', 'forks_count'])
+                          'description', 'Language', 'number_of_stars', 'type', 'created_at', 'forks_count', 'issues_count', 'topics_count'])
 
     idx_count = 0
     page_count = 1
@@ -31,7 +31,9 @@ def generate_csv(filename):
                     'Language': repo['language'],
                     'number_of_stars': repo['stargazers_count'],
                     'type': repo['owner']['type'],
-                    'forks_count': repo['forks_count']}
+                    'forks_count': repo['forks_count'],
+                    'issues_count': repo['open_issues_count'] if repo['has_issues'] else 0,
+                    'topics_count': len(repo['topics']) } 
 
             temp_df = pandas.DataFrame(temp, index=[idx_count])
             df = pandas.concat([df, temp_df])
