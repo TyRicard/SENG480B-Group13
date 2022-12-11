@@ -18,7 +18,7 @@ def main():
                     ylabel="Stars",
                     xscale="log",
                     yscale="log",
-                    ylim=1000)
+                    ylim=10000)
 
     plt.show()
 

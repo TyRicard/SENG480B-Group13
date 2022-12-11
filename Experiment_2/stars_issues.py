@@ -5,20 +5,19 @@ import matplotlib.pyplot as plt
 
 def main():
     # Basic Seaborn Approach: https://seaborn.pydata.org/tutorial/introduction
-    stars_and_commits = pd.read_csv("../data/datasets/data.csv")
+    stars_and_issues = pd.read_csv("../data/datasets/data.csv")
 
     # This produces a scatterplot
     scatter_plot =  sns.scatterplot(
                     data=stars_and_issues,
-                    x="issue_count",
+                    x="issues_count",
                     y="number_of_stars")
 
     # Changing the Label Titles to Match Approach
-    scatter_plot.set(xlabel="Issue",
+    scatter_plot.set(xlabel="Issues Count",
                     ylabel="Stars",
-                    xscale="log",
                     yscale="log",
-                    ylim=1000)
+                    ylim=10000)
 
     plt.show()
 

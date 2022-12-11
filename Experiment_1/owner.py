@@ -2,8 +2,8 @@ import pandas
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    df = pandas.read_csv('data.csv')
-    df = df.drop(df.iloc[:, :7], axis=1)
+    df = pandas.read_csv('../data/datasets/data.csv')
+    df = df.drop(df.iloc[:, :9], axis=1)
     df = df.drop(df.iloc[:, 2:], axis=1)
     df = df.dropna()
 

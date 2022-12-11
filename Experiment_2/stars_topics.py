@@ -1,24 +1,24 @@
 import os
 import pandas as pd
 import seaborn as sns
+import numpy as np
 import matplotlib.pyplot as plt
 
 def main():
     # Basic Seaborn Approach: https://seaborn.pydata.org/tutorial/introduction
-    stars_and_commits = pd.read_csv("../data/datasets/data.csv")
+    stars_and_topics = pd.read_csv("../data/datasets/data.csv")
 
-    # This produces a scatterplot
-    scatter_plot =  sns.scatterplot(
-                    data=stars_and_Tags,
-                    x="tag_count",
+    # This produces a barplot
+    bar_plot =  sns.barplot(
+                    data=stars_and_topics,
+                    x="topics_count",
                     y="number_of_stars")
 
     # Changing the Label Titles to Match Approach
-    scatter_plot.set(xlabel="Tags",
+    bar_plot.set(xlabel="Topics Count",
                     ylabel="Stars",
-                    xscale="log",
                     yscale="log",
-                    ylim=1000)
+                    ylim=10000)
 
     plt.show()
 
